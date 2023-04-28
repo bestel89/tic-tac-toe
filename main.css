@@ -1,0 +1,62 @@
+* {
+    box-sizing: border-box;
+    background-color: black;
+  }
+  
+  body {
+    /* viewport units: vh (viewport height), vw (viewport width), vmin (smallest between vh & vw) - creates highly scaleable pages*/
+    height: 100vh;
+    color: #f8f7fa;
+    margin: 0;
+    font-family: 'Gloria Hallelujah', cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  header {
+    font-size: 3vmin;
+    color:azure;
+    font-size: 4vmin;
+  }
+
+  h1 {
+    font-size: 3vmin;
+  }
+
+  #spaces {
+    display: grid;
+    grid-template-columns: repeat(3, 15vmin);
+    grid-template-rows: repeat(3, 15vmin);
+    margin-bottom: 2vmin;
+  }
+  
+  #spaces > div{
+    border: 1vmin solid azure;
+    background-color: black;
+  }
+
+  #buttons {
+    display: inline;
+  }
+
+  button {
+    margin-top: 4vmin;
+    padding: 2vmin;
+    font-size: 2vmin;
+    border-radius: 4vmin;
+    border: 0.3vmin solid turquoise;
+    color: turquoise;
+    font-family: 'Gloria Hallelujah', cursive;
+  }
+  
+   button:hover {
+     color: white;
+     background-color: darkgrey;
+     border: 0.3vmin solid white;
+   }
+
+   #turnIndicator {
+    color: turquoise;
+   }
