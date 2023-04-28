@@ -1,13 +1,22 @@
 * {
     box-sizing: border-box;
-    background-color: black;
+    background-color: var(--main-bg);
+  }
+
+  :root {
+    --main-bg: black;
+    --primary-color: azure;
+    --secondary-color: turquoise;
+    --tertiary-color: white;
+    --plr1-bg: #F59AE8;
+    --plr2-bg: #74FDFD;
   }
   
   body {
     /* viewport units: vh (viewport height), vw (viewport width), vmin (smallest between vh & vw) - creates highly scaleable pages*/
     height: 100vh;
-    color: #f8f7fa;
     margin: 0;
+    color: var(--primary-color);
     font-family: 'Gloria Hallelujah', cursive;
     display: flex;
     flex-direction: column;
@@ -17,12 +26,13 @@
 
   header {
     font-size: 3vmin;
-    color:azure;
+    color:var(--primary-color);
     font-size: 4vmin;
   }
 
   h1 {
     font-size: 3vmin;
+    color: var(--plr1-bg)
   }
 
   #spaces {
@@ -32,13 +42,9 @@
     margin-bottom: 2vmin;
   }
   
-  #spaces > div{
-    border: 1vmin solid azure;
-    background-color: black;
-  }
-
-  #buttons {
-    display: inline;
+  .spaces > div {
+    border: 1vmin solid var(--primary-color);
+    background-color: var(--main-bg);
   }
 
   button {
@@ -46,17 +52,42 @@
     padding: 2vmin;
     font-size: 2vmin;
     border-radius: 4vmin;
-    border: 0.3vmin solid turquoise;
-    color: turquoise;
+    border: 0.3vmin solid var(--secondary-color);
+    color: var(--secondary-color);
     font-family: 'Gloria Hallelujah', cursive;
   }
   
    button:hover {
-     color: white;
+     color: var(--tertiary-color);
      background-color: darkgrey;
-     border: 0.3vmin solid white;
+     border: 0.3vmin solid var(--tertiary-color);
    }
 
    #turnIndicator {
-    color: turquoise;
+    color: var(--secondary-color);
    }
+   
+#cell0 {
+       border-width: 0vmin 1vmin 1vmin 0vmin;
+   }
+#cell1 {
+       border-width: 0vmin 1vmin 1vmin 1vmin;
+    }
+#cell2 {
+        border-width: 0vmin 0vmin 1vmin 1vmin;
+    }
+#cell3 {
+        border-width: 1vmin 1vmin 1vmin 0vmin;
+    }
+#cell5 {
+        border-width: 1vmin 0vmin 1vmin 1vmin;
+    }
+#cell6 {
+    border-width: 1vmin 1vmin 0vmin 0vmin;
+}
+#cell7 {
+    border-width: 1vmin 1vmin 0vmin 1vmin;
+}
+#cell8 {
+    border-width: 1vmin 0vmin 0vmin 1vmin;
+}
