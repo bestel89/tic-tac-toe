@@ -44,6 +44,7 @@ function init() {
     turn = 1;
     winner = null;
     turnCount = 0;
+    document.getElementById('spaces').addEventListener('click', updateSpaces);
     render();
   }
 
@@ -63,42 +64,62 @@ function updateSpaces(evt) {
 ////check for a winner in board state
 //return null if no winner, 1/-1 if a player has won, 'T' if tie
 function getWinner(cellIdx) {
-    return checkVerticalWin(cellIdx);
+    return checkVerticalWin(cellIdx) ||
+        checkHorWin(cellIdx) ||
+        checkNESWWin(cellIdx) ||
+        checkNWSEWin(cellIdx);
+}
+
+ //check for DiagNWSE winner
+function checkNWSEWin(cellIdx) {
+    return countAdjacent(cellIdx, -4, 4) === 2 ? spaces[cellIdx] : null;
+}
+//check for DiagNESW winner
+function checkNESWWin(cellIdx) {
+    return countAdjacent(cellIdx, -2, 2) === 2 ? spaces[cellIdx] : null;
+}
+//check for horizontal winner
+function checkHorWin(cellIdx) {
+    return countAdjacent(cellIdx, -1, 1) === 2 ? spaces[cellIdx] : null;
 }
 
 //check for vertical winner
 function checkVerticalWin(cellIdx) {
-    // return countAdjacent(cellIdx, 3) === 2 ? spaces[cellIdx] : null;
-    if (countAdjacent(cellIdx, 3) === 2 || countAdjacent(cellIdx, -3) === 2) {
-        return spaces[cellIdx];
-    } else {
-        return null;
-    }
+    return countAdjacent(cellIdx, -3, 3) === 2 ? spaces[cellIdx] : null;
 }
 
-function countAdjacent(cellIdx, cellOffset) {
+function countAdjacent(cellIdx, cellOffsetA, cellOffsetB) {
     // shortcut variable to player value
     const player = spaces[cellIdx];
     //track count of adjacent cells with the same player value
-    let count = 0;
+    let countA = 0;
+    let countB = 0;
+    let travelACount = 0;
+    let travelBCount = 0;
+    let travelA = cellIdx + cellOffsetA;
+    let travelB = cellIdx + cellOffsetB;
     //initialise new coordinates
-    let modCellIdx = cellIdx;
-    modCellIdx += cellOffset;
-    while (
-    // Ensure cellIdx is within bounds of the board array
-    spaces[modCellIdx] !== undefined && 
-    spaces[modCellIdx] === player
-    ) {
-        count++;
-        modCellIdx += cellOffset;
-        // console.log('modcellidx = ' + modCellIdx);
-    }
-    console.log(cellIdx);
-    if (spaces[cellIdx +- cellOffset] !== undefined &&
-        spaces[cellIdx] === player) {
-            count++;
+    while(spaces[travelA] !== undefined && 
+        // spaces[travelA] !== 0 && 
+        // spaces[travelA] !== 8 &&
+        spaces[travelA] === player &&
+        travelACount <2) {
+            countA++;
+            travelACount++;
+            travelA += cellOffsetA;
+            console.log('countA: ' +countA);
+            console.log('travelACount: ' +travelACount);
         }
-    return count;
+        while(spaces[travelB] !== undefined &&
+            spaces[travelB] === player && 
+            travelBCount <2) {
+                countB++;
+                travelBCount++;
+                travelB += cellOffsetB;
+                console.log('countB: ' +countB);
+                console.log('travelBCount: ' +travelBCount);
+        }
+    return countA + countB;
 }
 
 // Main render function - to visualise all states in the DOM
@@ -132,6 +153,9 @@ function countAdjacent(cellIdx, cellOffset) {
                 ">${MOVES[arr[i]]}</span>`
         }
     }
+    if (winner) {
+        document.getElementById('spaces').removeEventListener('click', updateSpaces);
+    }
 }
 
   function renderMessage() {
@@ -151,7 +175,7 @@ function countAdjacent(cellIdx, cellOffset) {
     if (winner === 'T') {
         turnIndicatorMsg.innerText = "It's a tie!";
     } else if (winner) {
-        turnIndicatorMsg.innerHTML = `<span style="color:${COLORS[winner]}">${PLAYERS[winner].toUpperCase()}</span> wins!`;
+        turnIndicatorMsg.innerHTML = `<span style="color:${COLORS[winner]}">${PLAYERS[winner]}</span> wins!`;
     } else {
         turnIndicatorMsg.innerHTML = `<span style="color:${COLORS[turn]}">${[PLAYERS][0][turn].toUpperCase()}</span> turn.`;
     }
@@ -170,3 +194,7 @@ function countAdjacent(cellIdx, cellOffset) {
         btn.style.visibility = 'hidden';
     }
    }
+
+
+   //THINGS TO IMPROVE
+   //1) Stop being able to play when a winner is declared
