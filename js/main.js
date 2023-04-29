@@ -72,10 +72,18 @@ function getWinner(cellIdx) {
 
  //check for DiagNWSE winner
 function checkNWSEWin(cellIdx) {
+    //guards
+    if (cellIdx !== 0 ||
+        cellIdx !== 4 ||
+        cellIdx !== 8) return;
     return countAdjacent(cellIdx, -4, 4) === 2 ? spaces[cellIdx] : null;
 }
 //check for DiagNESW winner
 function checkNESWWin(cellIdx) {
+    //guards
+    if (cellIdx !== 2 ||
+        cellIdx !== 4 ||
+        cellIdx !== 6) return;
     return countAdjacent(cellIdx, -2, 2) === 2 ? spaces[cellIdx] : null;
 }
 //check for horizontal winner
@@ -100,8 +108,6 @@ function countAdjacent(cellIdx, cellOffsetA, cellOffsetB) {
     let travelB = cellIdx + cellOffsetB;
     //initialise new coordinates
     while(spaces[travelA] !== undefined && 
-        // spaces[travelA] !== 0 && 
-        // spaces[travelA] !== 8 &&
         spaces[travelA] === player &&
         travelACount <2) {
             countA++;
