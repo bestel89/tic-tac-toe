@@ -48,7 +48,9 @@
   }
 
   .spaces > div:hover {
-    background-color: #292B2B;
+    background-color: #191A1A;
+    transform: scale(1.03);
+    transition: transform 50ms ease-in;
   }
 
   button {
@@ -65,6 +67,8 @@
      color: var(--tertiary-color);
      background-color: darkgrey;
      border: 0.3vmin solid var(--tertiary-color);
+     transform: scale(0.95);
+     transition: transform 100ms ease-in;
    }
 
    #turnIndicator {
