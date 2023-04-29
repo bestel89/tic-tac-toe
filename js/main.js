@@ -150,7 +150,9 @@ function countAdjacent(cellIdx, cellOffsetA, cellOffsetB) {
         spaces[travelA] === player &&
         travelACount <=1 &&
         cellIdx-1 !== 2 &&
-        cellIdx-1 !== 5) {
+        cellIdx-2 !== 2 &&
+        cellIdx-1 !== 5 &&
+        cellIdx-2 !== 5) {
             countA++;
             travelACount++;
             travelA += cellOffsetA;
@@ -159,7 +161,9 @@ function countAdjacent(cellIdx, cellOffsetA, cellOffsetB) {
             spaces[travelB] === player && 
             travelBCount <=1 &&
             cellIdx+1 !== 3 &&
-            cellIdx+1 !== 6) {
+            cellIdx+2 !== 6 &&
+            cellIdx+1 !== 6 &&
+            cellIdx+2 !== 6) {
                 countB++;
                 travelBCount++;
                 travelB += cellOffsetB;
