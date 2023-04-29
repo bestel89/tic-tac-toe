@@ -16,6 +16,8 @@ const MOVES = {
     '0': null,
 }
 
+
+
 /*----- state variables -----*/
 let spaces; //single array of column spaces
 let turn; //-1 for noughts, 1 for crosses
@@ -45,7 +47,7 @@ function init() {
     render();
   }
 
-//updating the data that data model
+//updating the data that data model in response to user interaction then call render()
 function updateSpaces(evt) {
     const cellIdx = spaceEls.indexOf(evt.target);
     //guards - when number is already populated you get a -1
@@ -54,9 +56,50 @@ function updateSpaces(evt) {
     spaces[cellIdx] = turn;
     turn *= -1;
     turnCount++;
+    winner = getWinner(cellIdx);   ///MIGHT NEED SOME ARGUMENTS
     render();
 }
 
+////check for a winner in board state
+//return null if no winner, 1/-1 if a player has won, 'T' if tie
+function getWinner(cellIdx) {
+    return checkVerticalWin(cellIdx);
+}
+
+//check for vertical winner
+function checkVerticalWin(cellIdx) {
+    // return countAdjacent(cellIdx, 3) === 2 ? spaces[cellIdx] : null;
+    if (countAdjacent(cellIdx, 3) === 2 || countAdjacent(cellIdx, -3) === 2) {
+        return spaces[cellIdx];
+    } else {
+        return null;
+    }
+}
+
+function countAdjacent(cellIdx, cellOffset) {
+    // shortcut variable to player value
+    const player = spaces[cellIdx];
+    //track count of adjacent cells with the same player value
+    let count = 0;
+    //initialise new coordinates
+    let modCellIdx = cellIdx;
+    modCellIdx += cellOffset;
+    while (
+    // Ensure cellIdx is within bounds of the board array
+    spaces[modCellIdx] !== undefined && 
+    spaces[modCellIdx] === player
+    ) {
+        count++;
+        modCellIdx += cellOffset;
+        // console.log('modcellidx = ' + modCellIdx);
+    }
+    console.log(cellIdx);
+    if (spaces[cellIdx +- cellOffset] !== undefined &&
+        spaces[cellIdx] === player) {
+            count++;
+        }
+    return count;
+}
 
 // Main render function - to visualise all states in the DOM
   function render() {
@@ -99,16 +142,16 @@ function updateSpaces(evt) {
     // winner is truthy, display winner where turn was
     if (turnCount === 0) {
         gameInfoMsg.innerText = 'Time to start playing!';
-    } else if (turnCount >0 && turnCount <10) {
-        gameInfoMsg.innerText = 'Game in progress...';
     } else if (winner) {
         gameInfoMsg.innerText = 'Game over, click "PLAY AGAIN" to restart';
+    } else if (turnCount >0 && turnCount <10) {
+        gameInfoMsg.innerText = 'Game in progress...';
     }
 
     if (winner === 'T') {
         turnIndicatorMsg.innerText = "It's a tie!";
     } else if (winner) {
-        turnIndicatorMsg.innerHTML = `<span style="color:${COLORS[winner]}">${COLORS[winner].toUpperCase()}</span> wins!`;
+        turnIndicatorMsg.innerHTML = `<span style="color:${COLORS[winner]}">${PLAYERS[winner].toUpperCase()}</span> wins!`;
     } else {
         turnIndicatorMsg.innerHTML = `<span style="color:${COLORS[turn]}">${[PLAYERS][0][turn].toUpperCase()}</span> turn.`;
     }
