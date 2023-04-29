@@ -189,13 +189,7 @@ function render() {
             color:${COLORS[arr[i]]}
             ">${MOVES[arr[i]]}</span>`;
         } else if (MOVES[arr[i]] === null) {
-            cellEl.innerHTML = `<span style="
-                font-size: 0.5vmin;
-                background-color: transparent;
-                margin-left: 4vmin;
-                padding: 0;
-                color:${COLORS[arr[i]]}
-                ">${MOVES[arr[i]]}</span>`;
+            cellEl.innerHTML = `<span></span>`;
         };
     };
     if (winner) {
