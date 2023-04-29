@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
     background-color: var(--main-bg);
-  }
+}
 
   :root {
     --main-bg: black;
@@ -45,6 +45,10 @@
   .spaces > div {
     border: 1vmin solid var(--primary-color);
     background-color: var(--main-bg);
+  }
+
+  .spaces > div:hover {
+    background-color: #292B2B;
   }
 
   button {
